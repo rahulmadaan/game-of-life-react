@@ -58,6 +58,12 @@ class GameOfLife extends Component {
       if (ele !== null) ele.style.backgroundColor = "white";
     });
   }
+  clearCurrentCellsStyling() {
+    this.state.currentGeneration.forEach(cell => {
+      let ele = document.getElementById(JSON.stringify(cell));
+      if (ele !== null) ele.style.backgroundColor = "white";
+    });
+  }
 
   updateCellsOnBoard() {
     this.clearPreviousCellsStyling();
@@ -70,6 +76,9 @@ class GameOfLife extends Component {
   }
 
   startGame() {
+    if (this.state.interval !== "") {
+      return null;
+    }
     const interval = setInterval(() => {
       this.setState(state => {
         let result = [];
@@ -85,14 +94,21 @@ class GameOfLife extends Component {
   }
   resetGame() {
     clearInterval(this.state.interval);
+    this.setState(state => {
+      state.interval = "";
+    });
+    this.clearPreviousCellsStyling();
+    this.clearCurrentCellsStyling();
   }
 
-  aboutGame() {}
+  aboutGame() {
+    window.location = "https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life";
+  }
 
   render() {
     return (
       <div className="board">
-        <table className = "table">
+        <table className="table">
           <tbody>{this.createTable()}</tbody>
         </table>
         <button className="game-btn" onClick={this.startGame.bind(this)}>
