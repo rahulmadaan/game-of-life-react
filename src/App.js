@@ -97,6 +97,10 @@ class GameOfLife extends Component {
     this.setState(state => {
       state.interval = "";
     });
+    this.setState(state => {
+      state.currentGeneration = [];
+      state.previousGen = [];
+    });
     this.clearPreviousCellsStyling();
     this.clearCurrentCellsStyling();
   }
